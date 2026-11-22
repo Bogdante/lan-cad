@@ -8,9 +8,9 @@ import { project, summary } from '../core/store.js'
     <span>Масштаб: {{ project.plan.metersPerPx.toFixed(4) }} м/пикс.</span>
     <span>Абонентских точек: {{ summary.outlets }}</span>
     <span>Линий: {{ summary.links }}</span>
-    <span>Кабель: {{ summary.totalM }} м</span>
+    <span>Общая длина всех кабелей: {{ summary.totalM }} м</span>
     <span>Самая длинная линия: {{ summary.maxM }} м</span>
-    <span>Лотки: {{ summary.trayM }} м</span>
+    <span>Длина лотков: {{ summary.trayM }} м</span>
   </footer>
 </template>
 
