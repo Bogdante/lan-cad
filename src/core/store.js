@@ -128,7 +128,7 @@ export function removeDevice(cabinetId, index) {
 /** Сколько портов определённого вида в шкафу (коммутаторы или патч-панели). */
 export function cabinetPorts(cabinet, kind) {
   return cabinet.devices
-    .filter((d) => CATALOG[d.type].group === kind)
+    .filter((d) => CATALOG[d.type].kind === kind)
     .reduce((sum, d) => sum + CATALOG[d.type].ports, 0)
 }
 
@@ -167,7 +167,7 @@ export function finishTray() {
   ui.draftTray = ui.draftTray.filter((p, i, arr) => i === 0 || dist(p, arr[i - 1]) > 0)
   if (ui.draftTray.length >= 2) {
     const id = nextLabel('tray')
-    project.elements.push({ id, kind: 'tray', size: 'tray100', points: ui.draftTray })
+    project.elements.push({ id, kind: 'tray', type: 'tray100', points: ui.draftTray })
     ui.selectedId = id
   }
   ui.draftTray = []
@@ -242,7 +242,7 @@ export const trayFill = computed(() => {
   }
   return segments.value.map((s) => {
     const tray = findElement(s.routeId)
-    const size = CATALOG[tray.size]
+    const size = CATALOG[tray.type]
     const cables = count[s.key] || 0
     return { ...s, cables, fill: Math.round((cables * cableArea) / (size.w * size.h) * 1000) / 10 }
   })

@@ -74,7 +74,7 @@ const KIND_NAMES = { outlet: 'Розетка', ap: 'Точка доступа', 
     <template v-if="el.kind === 'tray'">
       <p>
         Типоразмер:
-        <select v-model="el.size" data-prop="size">
+        <select v-model="el.type" data-prop="type">
           <option v-for="key in TRAYS" :key="key" :value="key">{{ CATALOG[key].name }}</option>
         </select>
       </p>

@@ -61,7 +61,7 @@ export function makeDemoProject() {
   })
 
   // лотки: ввод из серверной, магистраль, четыре ряда и коридор у кабинетов
-  const tray = (id, pts) => elements.push({ id, kind: 'tray', size: 'tray100', points: pts.map(([x, y]) => ({ x, y })) })
+  const tray = (id, pts) => elements.push({ id, kind: 'tray', type: 'tray100', points: pts.map(([x, y]) => ({ x, y })) })
   tray('TR-01', [[400, 120], [400, 260]])
   tray('TR-02', [[400, 260], [400, 340], [400, 420], [400, 500], [400, 620]])
   tray('TR-03', [[60, 260], [400, 260], [760, 260]])
