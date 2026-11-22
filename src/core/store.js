@@ -75,7 +75,10 @@ function nextLabel(kind) {
 export function addPointElement(kind, x, y) {
   const id = nextLabel(kind)
   const element = { id, kind, x: Math.round(x), y: Math.round(y) }
-  if (kind === 'outlet') element.ports = CATALOG.outlet.ports
+  if (kind === 'outlet') {
+    element.type = 'outlet2'
+    element.ports = CATALOG.outlet2.ports
+  }
   if (kind === 'ap') element.ports = CATALOG.ap.ports
   if (kind === 'cabinet') element.devices = []
   project.elements.push(element)
@@ -98,6 +101,19 @@ export function removeElement(id) {
   if (ui.selectedId === id) ui.selectedId = null
 }
 
+export function setOutletType(id, type) {
+  const outlet = findElement(id)
+  const cabinetId = project.links.find((l) => l.from === id)?.to
+
+  outlet.type = type
+  outlet.ports = CATALOG[type].ports
+  project.links = project.links.filter((l) => l.from !== id)
+
+  if (cabinetId) {
+    connectOutlet(id, cabinetId)
+  }
+}
+
 // ---------- шкаф и его содержимое ----------
 
 export function addDevice(cabinetId, catalogKey) {
@@ -112,7 +128,7 @@ export function removeDevice(cabinetId, index) {
 /** Сколько портов определённого вида в шкафу (коммутаторы или патч-панели). */
 export function cabinetPorts(cabinet, kind) {
   return cabinet.devices
-    .filter((d) => (kind === 'switch' ? d.type.startsWith('switch') : d.type === kind))
+    .filter((d) => CATALOG[d.type].group === kind)
     .reduce((sum, d) => sum + CATALOG[d.type].ports, 0)
 }
 

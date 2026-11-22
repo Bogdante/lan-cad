@@ -2,20 +2,22 @@
 // названия, число портов, занимаемые юниты шкафа и сечения лотков.
 
 export const CATALOG = {
-  outlet:     { name: 'Розетка RJ-45 кат. 6, двухпортовая', ports: 2 },
-  ap:         { name: 'Точка беспроводного доступа', ports: 1 },
-  patchpanel: { name: 'Патч-панель 19" 24 порта кат. 6', ports: 24, units: 1 },
-  switch48:   { name: 'Коммутатор 48 портов 1 Гбит/с', ports: 48, units: 1 },
-  switch24:   { name: 'Коммутатор 24 порта 1 Гбит/с', ports: 24, units: 1 },
-  router:     { name: 'Маршрутизатор', units: 1 },
-  cabinet:    { name: 'Шкаф телекоммуникационный 19" 24U', units: 24 },
-  tray100:    { name: 'Лоток 100 x 50 мм', w: 100, h: 50 },
-  tray200:    { name: 'Лоток 200 x 50 мм', w: 200, h: 50 },
-  tray300:    { name: 'Лоток 300 x 50 мм', w: 300, h: 50}
+  outlet1:    { group: 'outlet', name: 'Розетка RJ-45 кат. 6, однопортовая', ports: 1 },
+  outlet2:    { group: 'outlet', name: 'Розетка RJ-45 кат. 6, двухпортовая', ports: 2 },
+  ap:         { group: 'ap', name: 'Точка беспроводного доступа', ports: 1 },
+  patchpanel: { group: 'patchpanel', name: 'Патч-панель 19" 24 порта кат. 6', ports: 24, units: 1 },
+  switch48:   { group: 'switch', name: 'Коммутатор 48 портов 1 Гбит/с', ports: 48, units: 1 },
+  switch24:   { group: 'switch', name: 'Коммутатор 24 порта 1 Гбит/с', ports: 24, units: 1 },
+  router:     { group: 'router', name: 'Маршрутизатор', units: 1 },
+  cabinet:    { group: 'cabinet', name: 'Шкаф телекоммуникационный 19" 24U', units: 24 },
+  tray100:    { group: 'tray', name: 'Лоток 100 x 50 мм', w: 100, h: 50 },
+  tray200:    { group: 'tray', name: 'Лоток 200 x 50 мм', w: 200, h: 50 },
+  tray300:    { group: 'tray', name: 'Лоток 300 x 50 мм', w: 300, h: 50}
 }
 
-/** Устройства, которые можно установить в шкаф (кнопки в панели свойств шкафа). */
-export const CABINET_DEVICES = ['patchpanel', 'switch48', 'switch24', 'router']
+export const itemsOfGroup = (group) => Object.keys(CATALOG).filter((key) => CATALOG[key].group === group)
 
-/** Типоразмеры лотков, из которых выбирает проектировщик. */
-export const TRAY_SIZES = ['tray100', 'tray200', 'tray300']
+export const CABINET_DEVICES = ['patchpanel', 'switch', 'router'].flatMap(itemsOfGroup)
+
+export const TRAYS = itemsOfGroup('tray')
+export const OUTLETS = itemsOfGroup('outlet')

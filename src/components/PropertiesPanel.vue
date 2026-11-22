@@ -2,9 +2,9 @@
 <script setup>
 import { computed } from 'vue'
 import {
-  project, ui, findElement, removeElement, addDevice, removeDevice, cabinetPorts, cableLinks, trayFill,
+  project, ui, findElement, removeElement, addDevice, removeDevice, cabinetPorts, cableLinks, trayFill, setOutletType
 } from '../core/store.js'
-import { CATALOG, CABINET_DEVICES, TRAY_SIZES } from '../core/catalog.js'
+import { CATALOG, CABINET_DEVICES, TRAYS, OUTLETS } from '../core/catalog.js'
 import { polylineLength } from '../core/geometry.js'
 
 const el = computed(() => (ui.selectedId ? findElement(ui.selectedId) : null))
@@ -31,6 +31,13 @@ const KIND_NAMES = { outlet: 'Розетка', ap: 'Точка доступа', 
 
     <!-- розетка или точка доступа -->
     <template v-if="el.kind === 'outlet' || el.kind === 'ap'">
+      <p v-if="el.kind === 'outlet'">
+        <select :value="el.type" @change="setOutletType(el.id, $event.target.value)">
+          <option v-for="key in OUTLETS" :key="key" :value="key">
+            {{ CATALOG[key].name }}
+          </option>
+        </select>
+      </p>
       <p>Портов: {{ el.ports }}. Подключено линий: {{ links.length }}.</p>
       <table v-if="links.length" class="grid">
         <tr><th>Линия</th><th>Шкаф</th><th class="num">Длина, м</th><th class="num">Канал, м</th></tr>
@@ -68,7 +75,7 @@ const KIND_NAMES = { outlet: 'Розетка', ap: 'Точка доступа', 
       <p>
         Типоразмер:
         <select v-model="el.size" data-prop="size">
-          <option v-for="key in TRAY_SIZES" :key="key" :value="key">{{ CATALOG[key].name }}</option>
+          <option v-for="key in TRAYS" :key="key" :value="key">{{ CATALOG[key].name }}</option>
         </select>
       </p>
       <p>

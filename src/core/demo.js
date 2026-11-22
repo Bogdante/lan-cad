@@ -37,7 +37,7 @@ function planSvg() {
 export function makeDemoProject() {
   const elements = []
   let n = 1
-  const outlet = (x, y) => elements.push({ id: `TO-${pad(n++)}`, kind: 'outlet', x, y, ports: 2 })
+  const outlet = (x, y) => elements.push({ id: `TO-${pad(n++)}`, kind: 'outlet', type: 'outlet2', x, y, ports: 2 })
 
   // 32 рабочих места в открытом пространстве: розетка в 0,5 м от лотка
   for (const y of [280, 360, 440, 520]) {
